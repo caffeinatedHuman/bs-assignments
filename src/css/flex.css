@@ -1,0 +1,38 @@
+#gallery-app{
+}
+
+.gallery{
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-container{
+  width: 200px;
+  height: 200px;
+}
+
+.image{
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive Design starts here */
+@media only screen and (max-width: 1240px) {
+  .gallery {
+    width: 600px;
+    margin: 0;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .gallery {
+    width: 100%;
+    margin: 0;
+  }
+  .image-container{
+    width: 100%;
+  }
+}
