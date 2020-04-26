@@ -1,0 +1,38 @@
+#gallery-app{
+  width: 100%;
+}
+
+.gallery{
+  width: 50%;
+  margin: auto;
+  overflow: auto;
+}
+
+.image-container{
+  float: left;
+  width: 235px;
+  height: 235px;
+}
+
+.image{
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive Design starts here */
+
+@media only screen and (max-width: 768px) {
+  .gallery {
+    width: 100%;
+    margin: 0;
+  }
+  .image-container{
+    display: block;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .image {
+    width: 100%;
+  }
+}
