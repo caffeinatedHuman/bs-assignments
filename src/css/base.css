@@ -1,0 +1,33 @@
+.image-container{
+  cursor: pointer;
+}
+
+.image-overlay{
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+  background-color: red;
+  opacity: 0.8;
+  display: none;
+}
+
+.image-overlay p{
+  color: white;
+}
+
+.image-container:hover .image-overlay{
+  background-color: grey;
+  display: block;
+}
+
+.overlay-content{
+  margin: 5px;
+}
+
+.clicked-at,
+.clicked-by,
+.clicked-on,
+.clicked-category{
+  font-size: 12px;
+}

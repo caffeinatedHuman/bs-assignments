@@ -11,6 +11,10 @@
     height: 100%;
     display: block;
   }
+
+  .image-container{
+    position: relative;
+  }
   
   /* Responsive Design starts here */
   @media only screen and (max-width: 1240px) {
