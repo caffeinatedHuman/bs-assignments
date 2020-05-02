@@ -12,6 +12,7 @@
   float: left;
   width: 235px;
   height: 235px;
+  position: relative;
 }
 
 .image{
