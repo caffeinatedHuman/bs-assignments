@@ -1,12 +1,129 @@
 var imagesData;
 var galleryApp;
 
-function buildUI(images) {
-  var gallery = document.createElement('div');
-  gallery.setAttribute('class', 'gallery');
+var images = null;
+var sortByVariables = ['category', 'title', 'date', 'location'];
+var sortFilterActive = false;
+var filterByActive = false;
+var currenSortValue = "category";
+var currentFilterValue = "Category 1";
 
-  for (var image in images){
-    var currentImage = images[image];
+function generateImagesData(imagesInput){
+  var images = imagesInput;
+  return images;
+}
+
+function rebuildGallery(inputImageArray){
+  var imagesElement = document.getElementsByClassName('images');
+  imagesElement[0].remove();
+  buildUI(inputImageArray);
+}
+
+function sortGallery(toSortBy, inputImageArray){
+  currenSortValue = toSortBy;
+  sortFilterActive = true;
+
+  var len = inputImageArray.length;
+
+  for (var val=0; val < len; val++){
+    for (var val2 = val+1; val2 < len; val2++){
+      if (inputImageArray[val2][toSortBy] <= inputImageArray[val][toSortBy]){
+        var temp = inputImageArray[val2];
+        inputImageArray[val2] = inputImageArray[val];
+        inputImageArray[val] = temp;
+      }
+    }
+  }
+
+  return inputImageArray;
+}
+
+function filterGallery(toFilterBy, inputImageArray){
+  currentFilterValue = toFilterBy;
+  filterByActive = true;
+
+  var outputImages = [];
+  var len = inputImageArray.length;
+
+  for (var val=0; val < len; val++){
+    if(inputImageArray[val]['category']===toFilterBy){
+      outputImages.push(inputImageArray[val]);
+    }
+  }
+
+  return outputImages;
+}
+
+function buildFilters(type, optionValues){
+  if (type === 'sort') {
+    var sortByFilter = document.createElement('div');
+    sortByFilter.setAttribute('class', 'sortby-container');
+
+    var selectTag = document.createElement('select');
+    selectTag.setAttribute('class','sortByFilter');
+    selectTag.addEventListener('change', function (){
+      var filteredImages = filterGallery(currentFilterValue, images);
+      var sortedImages = sortGallery (event.target.value, filteredImages);
+      rebuildGallery(sortedImages, "sort");
+    });
+
+    for (var val in optionValues){
+      var option = document.createElement('option');
+      option.setAttribute('value', optionValues[val]);
+      option.text = optionValues[val];
+
+      selectTag.appendChild(option);
+    }
+
+    sortByFilter.appendChild(selectTag);
+    return sortByFilter;
+  } else if (type === 'filtering'){
+    var filteByFilter = document.createElement('div');
+    filteByFilter.setAttribute('class', 'filterby-container');
+
+    var selectTag = document.createElement('select');
+    selectTag.setAttribute('class', 'filterByFilter');
+    selectTag.addEventListener('change', function (){
+      var sortedImages = sortGallery(currenSortValue, images);
+      var filteredImages = filterGallery(event.target.value, sortedImages);
+      rebuildGallery(filteredImages, "filter");
+    });
+
+    for (val in optionValues){
+      var option = document.createElement('option');
+      option.setAttribute('value', optionValues[val]);
+      option.text = optionValues[val];
+
+      selectTag.appendChild(option);
+    }
+
+    filteByFilter.appendChild(selectTag);
+    return filteByFilter;
+  }
+}
+
+function buildUI(images) {
+  var imagesData = generateImagesData(images);
+  var gallery;
+
+  if (!sortFilterActive && !filterByActive){
+    gallery = document.createElement('div');
+    gallery.setAttribute('class', 'gallery');
+
+    var sortByFilter = buildFilters('sort', sortByVariables);
+    gallery.appendChild(sortByFilter);
+
+    var filterByFilter = buildFilters('filtering', ['Category 0','Category 1']);
+    gallery.appendChild(filterByFilter);
+  } else {
+    gallery = document.getElementsByClassName('gallery')[0];
+  }
+
+  var images = document.createElement('div');
+  images.setAttribute('class', 'images');
+
+  for (var image in imagesData){
+    var currentImage = imagesData[image];
     var imageSrc = currentImage["src"];
     var imageTitle = currentImage["title"];
     var imageCategory = currentImage["category"];
@@ -16,8 +133,6 @@ function buildUI(images) {
 
     var parsedDate = new Date(imageDate);
     var finalDate = parsedDate.getDate()+"/"+parsedDate.getMonth()+"/"+parsedDate.getFullYear();
-
-    console.log(currentImage);
 
     // Image Container:
     var imageContainer = document.createElement('div');
@@ -63,9 +178,10 @@ function buildUI(images) {
     // Append all elements to the Container:
     imageContainer.appendChild(imageElement);
     imageContainer.appendChild(imageOverlay);
-    gallery.append(imageContainer);
+    images.append(imageContainer);
   }
 
+  gallery.append(images);
   galleryApp.append(gallery);
 }
 
@@ -74,7 +190,8 @@ function fetchImageData(url, callback) {
   xhttp.onreadystatechange = function (){
     if(this.readyState == 4 && this.status == 200){
       imagesData = JSON.parse(this.responseText).images;
-      console.log(imagesData);
+      // console.log(imagesData);
+      images = imagesData;
       callback(imagesData);
     }
   };

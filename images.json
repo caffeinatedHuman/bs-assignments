@@ -26,7 +26,7 @@
       },
       {
         "title":"Title 6",
-        "category":" Category 0",
+        "category":"Category 0",
         "date":"1564741066292",
         "src": "images/2.jpg",
         "location": "Mumbai",
@@ -34,7 +34,7 @@
       },
       {
         "title":"Title 5",
-        "category":" Category 3",
+        "category":"Category 3",
         "date":"1564941066192",
         "src": "images/5.jpg",
         "location": "Mumbai",
@@ -42,7 +42,7 @@
       },
       {
         "title":"Title 4",
-        "category":" Category 2",
+        "category":"Category 2",
         "date":"1564842866292",
         "src": "images/3.jpg",
         "location": "Mumbai",
@@ -50,7 +50,7 @@
       },
       {
         "title":"Title 3",
-        "category":" Category 1",
+        "category":"Category 1",
         "date":"1574942866292",
         "src": "images/7.jpg",
         "location": "Mumbai",
@@ -58,7 +58,7 @@
       },
       {
         "title":"Title 2",
-        "category":" Category 3",
+        "category":"Category 3",
         "date":"1364941066292",
         "src": "images/9.jpg",
         "location": "Mumbai",
@@ -66,7 +66,7 @@
       },
       {
         "title":"Title 1",
-        "category":" Category 1",
+        "category":"Category 1",
         "date":"1364941066290",
         "src": "images/6.jpg",
         "location": "Mumbai",
