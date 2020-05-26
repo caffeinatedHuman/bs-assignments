@@ -1,0 +1,30 @@
+.modal-container{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.modal-overlay{
+  width: 100%;
+  height: 100%;
+  background-color: darkgray;
+  opacity:0.5;
+}
+
+.modal{
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  top: 15%;
+  left: 24%;
+  background-color: white;
+  opacity: 1;
+  border: 15px solid white;
+}
+
+.modal-image{
+  width:100%;
+  height: 100%;
+}
