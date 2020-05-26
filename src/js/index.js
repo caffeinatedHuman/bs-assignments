@@ -54,6 +54,28 @@ function filterGallery(toFilterBy, inputImageArray){
   return outputImages;
 }
 
+function buildModalUI(){
+  var modalContainer = document.createElement('div');
+  modalContainer.setAttribute('class', 'modal-container');
+  modalContainer.setAttribute('id','gallery-modal');
+
+  var modalOverlay = document.createElement('div');
+  modalOverlay.setAttribute('class','modal-overlay');
+
+  var modal = document.createElement('div');
+  modal.setAttribute('class', 'modal');
+
+  var modalImage = document.createElement('img');
+  modalImage.setAttribute('class', 'modal-image');
+  modalImage.setAttribute('src', 'images/1.jpg');
+
+  modal.append(modalImage);
+  modalContainer.append(modalOverlay);
+  modalContainer.appendChild(modal);
+
+  return modalContainer;
+}
+
 function buildFilters(type, optionValues){
   if (type === 'sort') {
     var sortByFilter = document.createElement('div');
@@ -102,7 +124,7 @@ function buildFilters(type, optionValues){
   }
 }
 
-function buildUI(images) {
+function buildUI(images, buildModal) {
   var imagesData = generateImagesData(images);
   var gallery;
 
@@ -183,6 +205,11 @@ function buildUI(images) {
 
   gallery.append(images);
   galleryApp.append(gallery);
+
+  if (buildModal){
+    var modal=buildModalUI();
+    galleryApp.appendChild(modal);
+  }
 }
 
 function fetchImageData(url, callback) {
@@ -192,7 +219,7 @@ function fetchImageData(url, callback) {
       imagesData = JSON.parse(this.responseText).images;
       // console.log(imagesData);
       images = imagesData;
-      callback(imagesData);
+      callback(imagesData, true);
     }
   };
   xhttp.open(
