@@ -1,13 +1,16 @@
 body{
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
+
 li{
-    margin: 5px 0;
+  margin: 5px 0;
 }
+
 a{
-    font-size: 18px;
+  font-size: 18px;
 }
+
 #gallery-examples{
-    width: 50%;
-    margin: auto;
+  width: 50%;
+  margin: auto;
 }
