@@ -4,6 +4,10 @@
 .gallery{
   width: 50%;
   margin: auto;
+}
+
+.images{
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
