@@ -69,7 +69,18 @@ function buildModalUI(){
   modalImage.setAttribute('class', 'modal-image');
   modalImage.setAttribute('src', 'images/1.jpg');
 
+  var previousButton = document.createElement('div');
+  previousButton.setAttribute('class', 'modal-previous-button')
+  previousButton.innerHTML = '&#10094;';
+  
+  var nextButton = document.createElement('div');
+  nextButton.setAttribute('class', 'modal-next-button')
+  nextButton.innerHTML = '&#10095;';
+
   modal.append(modalImage);
+  modal.appendChild(previousButton);
+  modal.appendChild(nextButton);
+  
   modalContainer.append(modalOverlay);
   modalContainer.appendChild(modal);
 

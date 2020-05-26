@@ -28,3 +28,25 @@
   width:100%;
   height: 100%;
 }
+
+.modal-previous-button,
+.modal-next-button{
+  position: absolute;
+  top: 40%;
+  color: white;
+  font-size: 72px;
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.modal-previous-button{
+  left: 10px;
+}
+.modal-next-button{
+  right: 10px;
+}
+
+.modal-previous-button:hover,
+.modal-next-button:hover{
+  opacity: 0.7
+}
