@@ -1,4 +1,5 @@
 var imagesData;
+var currentImagesData;
 var galleryApp;
 
 var images = null;
@@ -7,6 +8,7 @@ var sortFilterActive = false;
 var filterByActive = false;
 var currenSortValue = "category";
 var currentFilterValue = "Category 1";
+var currentModalIndex = 0;
 
 function generateImagesData(imagesInput){
   var images = imagesInput;
@@ -20,11 +22,12 @@ function rebuildGallery(inputImageArray){
 }
 
 function sortGallery(toSortBy, inputImageArray){
+  console.log('Sorting the Gallery:');
   currenSortValue = toSortBy;
   sortFilterActive = true;
-
+  
   var len = inputImageArray.length;
-
+  
   for (var val=0; val < len; val++){
     for (var val2 = val+1; val2 < len; val2++){
       if (inputImageArray[val2][toSortBy] <= inputImageArray[val][toSortBy]){
@@ -34,7 +37,8 @@ function sortGallery(toSortBy, inputImageArray){
       }
     }
   }
-
+  console.log('Returning image array:', inputImageArray);
+  console.log('Sorted the Gallery;');
   return inputImageArray;
 }
 
@@ -54,9 +58,59 @@ function filterGallery(toFilterBy, inputImageArray){
   return outputImages;
 }
 
+function changeModalImage(type){
+
+  console.log('Change modal image:');
+  console.log(currentImagesData);
+  console.log('Change modal image;');
+
+  var currentModalLength = currentImagesData.length;
+
+  var modalImage = document.getElementById('modal-image');
+  var newSrc = '';
+  
+  var newIndex = parseInt(currentModalIndex)+ parseInt(type);
+  if ( type == 1){
+    console.log('Advance by 1 :)');
+    if (newIndex < currentModalLength){
+      newSrc = newIndex;
+    } else {
+      newSrc = 0;
+    }
+  } else{
+    console.log('Advance by -1 :)');
+    if( newIndex > 0){
+      newSrc = newIndex;
+    } else {
+      newSrc = currentModalLength;
+    }
+  }
+  currentModalIndex = newSrc;
+
+  var newImageSrc = currentImagesData[newSrc].src;
+  modalImage.setAttribute('src',newImageSrc)
+}
+
+function closeModal (){
+  var modalContainer = document.getElementById('gallery-modal');
+  modalContainer.classList.add('hide');
+}
+
+function showImageModal(e){
+  console.log(e);
+  console.log(e.target);
+  console.log(e.target.src);
+
+  var modalContainer = document.getElementById('gallery-modal');
+  modalContainer.classList.remove('hide');
+  var modalImage = document.getElementById('modal-image');
+  modalImage.setAttribute('src', e.target.src);
+  currentModalIndex = e.target.dataset.position;
+}
+
 function buildModalUI(){
   var modalContainer = document.createElement('div');
-  modalContainer.setAttribute('class', 'modal-container');
+  modalContainer.setAttribute('class', 'modal-container hide');
   modalContainer.setAttribute('id','gallery-modal');
 
   var modalOverlay = document.createElement('div');
@@ -67,20 +121,34 @@ function buildModalUI(){
 
   var modalImage = document.createElement('img');
   modalImage.setAttribute('class', 'modal-image');
+  modalImage.setAttribute('id', 'modal-image');
   modalImage.setAttribute('src', 'images/1.jpg');
+
+  var crossButton = document.createElement('div');
+  crossButton.setAttribute('id', 'close-modal');
+  crossButton.setAttribute('class', 'close-modal');
+  crossButton.innerHTML = '&#10005;';
+  crossButton.addEventListener("click", closeModal)
 
   var previousButton = document.createElement('div');
   previousButton.setAttribute('class', 'modal-previous-button')
   previousButton.innerHTML = '&#10094;';
+  previousButton.addEventListener("click", function (){
+    changeModalImage(-1);
+  });
   
   var nextButton = document.createElement('div');
   nextButton.setAttribute('class', 'modal-next-button')
   nextButton.innerHTML = '&#10095;';
+  nextButton.addEventListener("click", function (){
+    changeModalImage(1);
+  });
 
   modal.append(modalImage);
+  modal.appendChild(crossButton);
   modal.appendChild(previousButton);
   modal.appendChild(nextButton);
-  
+
   modalContainer.append(modalOverlay);
   modalContainer.appendChild(modal);
 
@@ -88,16 +156,18 @@ function buildModalUI(){
 }
 
 function buildFilters(type, optionValues){
+  var selectTag = document.createElement('select');
+
   if (type === 'sort') {
     var sortByFilter = document.createElement('div');
     sortByFilter.setAttribute('class', 'sortby-container');
 
-    var selectTag = document.createElement('select');
     selectTag.setAttribute('class','sortByFilter');
     selectTag.addEventListener('change', function (){
-      var filteredImages = filterGallery(currentFilterValue, images);
+      var filteredImages = filterGallery(currentFilterValue, imagesData);
       var sortedImages = sortGallery (event.target.value, filteredImages);
-      rebuildGallery(sortedImages, "sort");
+      currentImagesData = sortedImages;
+      rebuildGallery(currentImagesData, "sort");
     });
 
     for (var val in optionValues){
@@ -114,12 +184,11 @@ function buildFilters(type, optionValues){
     var filteByFilter = document.createElement('div');
     filteByFilter.setAttribute('class', 'filterby-container');
 
-    var selectTag = document.createElement('select');
     selectTag.setAttribute('class', 'filterByFilter');
     selectTag.addEventListener('change', function (){
-      var sortedImages = sortGallery(currenSortValue, images);
-      var filteredImages = filterGallery(event.target.value, sortedImages);
-      rebuildGallery(filteredImages, "filter");
+      var sortedImages = sortGallery(currenSortValue, imagesData);
+      currentImagesData = filterGallery(event.target.value, sortedImages);
+      rebuildGallery(currentImagesData, "filter");
     });
 
     for (val in optionValues){
@@ -170,12 +239,16 @@ function buildUI(images, buildModal) {
     // Image Container:
     var imageContainer = document.createElement('div');
     imageContainer.setAttribute('class','image-container');
-
+    imageContainer.addEventListener('click', function (e){
+      showImageModal(e);
+    })
+    
     // Image HTML Element:
     var imageElement = document.createElement('img');
     var imageSrc = imageSrc;
     imageElement.setAttribute('src',imageSrc);
     imageElement.setAttribute('class','image');
+    imageElement.setAttribute('data-position',image);
 
     // Image Overlay:
     var imageOverlay = document.createElement('div');
@@ -215,7 +288,9 @@ function buildUI(images, buildModal) {
   }
 
   gallery.append(images);
-  galleryApp.append(gallery);
+  if (!sortFilterActive && !filterByActive){
+    galleryApp.append(gallery);
+  }
 
   if (buildModal){
     var modal=buildModalUI();
@@ -229,8 +304,8 @@ function fetchImageData(url, callback) {
     if(this.readyState == 4 && this.status == 200){
       imagesData = JSON.parse(this.responseText).images;
       // console.log(imagesData);
-      images = imagesData;
-      callback(imagesData, true);
+      currentImagesData = imagesData;
+      callback(currentImagesData, true);
     }
   };
   xhttp.open(
