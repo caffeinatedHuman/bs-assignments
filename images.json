@@ -5,7 +5,7 @@
         "category":"Category 0",
         "date":"1565541066292",
         "src": "images/1.jpg",
-        "location": "Mumbai",
+        "location": "Venus",
         "photographer": "Person X"
       },
       {
@@ -13,7 +13,7 @@
         "category":"Category 1",
         "date":"1564911066292",
         "src": "images/6.jpg",
-        "location": "Mumbai",
+        "location": "Mars",
         "photographer": "Person X"
       },
       {
@@ -21,7 +21,7 @@
         "category":"Category 2",
         "date":"1568911266292",
         "src": "images/8.jpg",
-        "location": "Mumbai",
+        "location": "Earth",
         "photographer": "Person X"
       },
       {
@@ -29,7 +29,7 @@
         "category":"Category 0",
         "date":"1564741066292",
         "src": "images/2.jpg",
-        "location": "Mumbai",
+        "location": "Sun",
         "photographer": "Person X"
       },
       {
@@ -37,7 +37,7 @@
         "category":"Category 3",
         "date":"1564941066192",
         "src": "images/5.jpg",
-        "location": "Mumbai",
+        "location": "Moon",
         "photographer": "Person X"
       },
       {
@@ -45,7 +45,7 @@
         "category":"Category 2",
         "date":"1564842866292",
         "src": "images/3.jpg",
-        "location": "Mumbai",
+        "location": "Saturn",
         "photographer": "Person X"
       },
       {
@@ -53,7 +53,7 @@
         "category":"Category 1",
         "date":"1574942866292",
         "src": "images/7.jpg",
-        "location": "Mumbai",
+        "location": "Pluto",
         "photographer": "Person X"
       },
       {
@@ -69,7 +69,7 @@
         "category":"Category 1",
         "date":"1364941066290",
         "src": "images/6.jpg",
-        "location": "Mumbai",
+        "location": "Earth",
         "photographer": "Person X"
       }
     ]

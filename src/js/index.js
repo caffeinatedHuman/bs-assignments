@@ -157,11 +157,14 @@ function buildModalUI(){
 
 function buildFilters(type, optionValues){
   var selectTag = document.createElement('select');
+  var pTag = document.createElement('p');
 
   if (type === 'sort') {
+    pTag.innerText = ('Sort By:');
+    
     var sortByFilter = document.createElement('div');
     sortByFilter.setAttribute('class', 'sortby-container');
-
+    
     selectTag.setAttribute('class','sortByFilter');
     selectTag.addEventListener('change', function (){
       var filteredImages = filterGallery(currentFilterValue, imagesData);
@@ -169,18 +172,21 @@ function buildFilters(type, optionValues){
       currentImagesData = sortedImages;
       rebuildGallery(currentImagesData, "sort");
     });
-
+    
     for (var val in optionValues){
       var option = document.createElement('option');
       option.setAttribute('value', optionValues[val]);
       option.text = optionValues[val];
-
+      
       selectTag.appendChild(option);
     }
-
+    
+    sortByFilter.appendChild(pTag);
     sortByFilter.appendChild(selectTag);
     return sortByFilter;
   } else if (type === 'filtering'){
+    pTag.innerText = ('Filter By:');
+
     var filteByFilter = document.createElement('div');
     filteByFilter.setAttribute('class', 'filterby-container');
 
@@ -199,6 +205,7 @@ function buildFilters(type, optionValues){
       selectTag.appendChild(option);
     }
 
+    filteByFilter.appendChild(pTag);
     filteByFilter.appendChild(selectTag);
     return filteByFilter;
   }

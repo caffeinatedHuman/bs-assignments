@@ -20,6 +20,11 @@
   height: 100%;
 }
 
+.sortby-container p,
+.filterby-container p{
+  display: inline;
+}
+
 /* Responsive Design starts here */
 
 @media only screen and (max-width: 768px) {
